@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import wave
 import struct
-import math
 def main(args):
     '''Abrir o arquivo “exemplo1.wav”, com o comando open do pacote wave no modo leitura'''
     arquivoWave = wave.open('exemplo1.wav', 'r')
@@ -22,8 +21,7 @@ def main(args):
     '''A função “getnframes” retorna o número de frames, ou seja, a quantidade de dados armazenados.'''
     print("Número de frames: ", arquivoWave.getnframes())
 
-    '''A função “getcompname()” retorna o tipo de compactação. Não utilizamos nenhuma compactação em 
-    arquivos wav.'''
+    '''A função “getcompname()” retorna o tipo de compactação. Nenhuma compactação foi usada.'''
     print("Compactação: ", arquivoWave.getcompname())
 
     '''A função “readFrames(nFrames)” retorna uma string binária com todos os bytes armazenados na 
