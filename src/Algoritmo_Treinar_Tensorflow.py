@@ -23,7 +23,6 @@ for i in range(0,10):
 
 
 
-
 with tf.Session() as sess:
     retorno1 = sess.run(entradas)
     print(retorno1)
