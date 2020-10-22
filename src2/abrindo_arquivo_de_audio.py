@@ -2,7 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import wave
 import struct
-def main(args):
+
+def main():
     '''Abrir o arquivo “exemplo1.wav”, com o comando open do pacote wave no modo leitura'''
     arquivoWave = wave.open('exemplo1.wav', 'r')
 
@@ -35,12 +36,18 @@ def main(args):
     tempo = np.arange(start=0, stop=arquivoWave.getnframes() * deltaX, step=deltaX, dtype=np.float)
 
     '''Converter string binária lida através de “readframes” para uma lista python.'''
-    waveDataList = [struct.unpack("<h", frames[nLoop] + frames[nLoop + 1])[0] for nLoop in range(0, len(frames), 2)]
+    waveDataList = []
+    print('Tamanho da variavel frames: ',len(frames))
+
+    for nLoop in range(0, len(frames), 2):
+        waveDataList.append(struct.unpack('<h', (frames[nLoop] + frames[nLoop + 1]).to_bytes(2,'big')))
+
+    #waveDataList = [struct.unpack("<h", frames[nLoop] + frames[nLoop + 1])[0] for nLoop in range(0, len(frames), 2)]
 
     '''Converter a lista python para um array numpy, mais adequado para processamento matemático.'''
     waveArray = np.array(waveDataList)
 
-    '''Preparar para traçar o gráfico dos primeiros 100 pontos do array. 100 pontos foram selecionados 
+    '''Preparar para traçar o gráfico dos primeiros 100 pontos do array. 100 pontos foram selecionados
     para apresentar cerca de dois ciclos completos na tela.'''
     plt.plot(tempo[0:100], waveArray[0:100])
 
@@ -54,8 +61,9 @@ def main(args):
     arquivoWave.close()
     return 0
 
+# if __name__ == '__main__':
+#     import sys
+#
+#     sys.exit(main(sys.argv))
 
-if __name__ == '__main__':
-    import sys
-
-    sys.exit(main(sys.argv))
+main()
